@@ -3,6 +3,7 @@ import SubCategoryModel from "../models/subCategory.model.js";
 import ProductModel from "../models/product.model.js";
 
 export const AddCategoryController = async(request,response)=>{
+    
     try {
         const { name , image } = request.body 
 
