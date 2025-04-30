@@ -1,10 +1,11 @@
 import { Router } from 'express'
 import auth from '../middleware/auth.js'
-import { createProductController, deleteProductDetails, getProductByCategory, getProductByCategoryAndSubCategory, getProductController, getProductDetails, searchProduct, updateProductDetails } from '../controllers/product.controller.js'
+import { createProductController, deleteProductDetails, getProductByCategory, getProductByCategoryAndSubCategory, getProductController, getProductDetails, searchProduct, updateProductDetails, getAllProduct } from '../controllers/product.controller.js'
 import { admin } from '../middleware/Admin.js'
 
 const productRouter = Router()
 
+productRouter.get('/get-all-product',getAllProduct)
 productRouter.post("/create",auth,admin,createProductController)
 productRouter.post('/get',getProductController)
 productRouter.post("/get-product-by-category",getProductByCategory)

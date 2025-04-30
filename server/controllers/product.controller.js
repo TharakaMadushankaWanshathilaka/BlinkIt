@@ -1,5 +1,23 @@
 import ProductModel from "../models/product.model.js";
 
+export const getAllProduct = async(request,response)=>{
+    try {
+        const product = await ProductModel.find({}).populate('category subCategory')
+        return response.json({
+            message : "All product",
+            data : product,
+            error : false,
+            success : true
+        })
+    } catch (error) {
+        return response.status(500).json({
+            message : error.message || error,
+            error : true,
+            success : false
+        })
+    }
+}
+
 export const createProductController = async(request,response)=>{
     try {
         const { 
