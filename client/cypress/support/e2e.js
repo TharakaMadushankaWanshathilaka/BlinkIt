@@ -1,4 +1,7 @@
 // cypress/support/e2e.js
-
-// You can add custom commands or global hooks here if needed.
-// For now, just keep it empty to avoid Cypress errors.
+// ensure `process.env` exists in the browser so ci-info won’t blow up
+if (typeof process === 'undefined') {
+    // eslint-disable-next-line no-undef
+    window.process = { env: {} }
+  }
+  
