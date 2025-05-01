@@ -5,7 +5,4 @@ if (typeof process === 'undefined') {
     window.process = { env: {} }
   }
 
-  // cypress/support/e2e.js
-Cypress.on('uncaught:exception', (err, runnable) => {
-    return false;   // prevents Cypress from failing tests on any uncaught exception :contentReference[oaicite:1]{index=1}
-  });
+  
