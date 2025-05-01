@@ -34,12 +34,28 @@ export default [
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
       ...reactHooks.configs.recommended.rules,
-      ...cypress.configs.recommended.rules,
       'react/jsx-no-target-blank': 'off',
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
       ],
+    },
+  },
+
+  // ✅ Cypress-specific override
+  {
+    files: ['**/cypress/e2e/**/*.spec.js'], // Adjust path if needed
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        ...globals.commonjs,
+        ...globals.mocha,
+        ...globals.cypress,
+      },
+    },
+    rules: {
+      ...cypress.configs.recommended.rules,
     },
   },
 ]
