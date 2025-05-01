@@ -16,6 +16,7 @@ const Register = () => {
     })
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+    const [passwordError, setPasswordError] = useState("");
     const navigate = useNavigate()
 
     const handleChange = (e) => {
@@ -27,17 +28,35 @@ const Register = () => {
                 [name]: value
             }
         })
+
+        if (name === "password" || name === "confirmPassword") {
+            validatePassword(value);
+        }
+    }
+
+    const validatePassword = (password) => {
+        const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!strongPasswordRegex.test(password)) {
+            setPasswordError("Password must be at least 8 characters long, include an uppercase letter, a number, and a special character.");
+        } else {
+            setPasswordError("");
+        }
     }
 
     const valideValue = Object.values(data).every(el => el)
 
 
-    const handleSubmit = async(e)=>{
+    const handleSubmit = async(e)=> {
         e.preventDefault()
+
+        if (passwordError) {
+            toast.error("Please enter a stronger password.");
+            return;
+        }
 
         if(data.password !== data.confirmPassword){
             toast.error(
-                "password and confirm password must be same"
+                "Password and confirm password must be the same."
             )
             return
         }
@@ -47,7 +66,7 @@ const Register = () => {
                 ...SummaryApi.register,
                 data : data
             })
-            
+
             if(response.data.error){
                 toast.error(response.data.message)
             }
@@ -66,10 +85,8 @@ const Register = () => {
         } catch (error) {
             AxiosToastError(error)
         }
-
-
-
     }
+
     return (
         <section className='w-full container mx-auto px-2'>
             <div className='bg-white my-4 w-full max-w-lg mx-auto rounded p-7'>
@@ -123,6 +140,7 @@ const Register = () => {
                                 }
                             </div>
                         </div>
+                        {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
                     </div>
                     <div className='grid gap-1'>
                         <label htmlFor='confirmPassword'>Confirm Password :</label>
